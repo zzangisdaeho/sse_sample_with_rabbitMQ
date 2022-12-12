@@ -16,8 +16,6 @@ public class TestController {
 
     private final NotificationService notificationService;
 
-    private final NotificationBufferRepository notificationBufferRepository;
-
     private final RabbitTemplate rabbitTemplate;
 
     @PostMapping("/rabbitmq")

@@ -28,7 +28,7 @@ public class NotificationController {
     }
 
     @GetMapping
-    public List<NotificationDto> readNotifications(){
-        return new ArrayList<>();
+    public List<NotificationDto> readNotifications(@RequestParam String userId){
+        return notificationService.readNotifications(userId);
     }
 }

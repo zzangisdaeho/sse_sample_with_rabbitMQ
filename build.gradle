@@ -21,8 +21,10 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     //https://github.com/jhalterman/expiringmap#expiration-policies
     implementation 'net.jodah:expiringmap:0.5.10'
+    implementation 'org.modelmapper:modelmapper:3.1.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

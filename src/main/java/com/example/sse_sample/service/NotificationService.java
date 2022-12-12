@@ -1,24 +1,36 @@
 package com.example.sse_sample.service;
 
+import com.example.sse_sample.document.Notification;
+import com.example.sse_sample.dto.NotificationDto;
 import com.example.sse_sample.repository.EmitterRepository;
 import com.example.sse_sample.repository.NotificationBufferRepository;
+import com.example.sse_sample.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 10; // 10
+    private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 10; // 10min
 
     private final EmitterRepository emitterRepository;
     private final NotificationBufferRepository notificationBufferRepository;
+
+    private final NotificationRepository notificationRepository;
+
+    private final ModelMapper modelMapper;
 
     //notification 구독
     public SseEmitter subscribe(Long userId, String lastEventId) {
@@ -74,6 +86,12 @@ public class NotificationService {
             String newId = id + "_" + System.currentTimeMillis();
             notificationBufferRepository.saveEventCache(newId, content);
         }
+    }
+
+    public List<NotificationDto> readNotifications(String userId){
+        List<Notification> recent90DaysNotifications = notificationRepository.findAllByUserIdAndCreatedAtAfter(userId, Date.from(ZonedDateTime.now().minusDays(90).toInstant()));
+
+        return recent90DaysNotifications.stream().map(notification -> modelMapper.map(notification, NotificationDto.class)).collect(Collectors.toList());
     }
 
 }
