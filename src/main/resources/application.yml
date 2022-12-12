@@ -1,0 +1,10 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: test
+    password: 1234
+
+rabbitmq:
+  dynamic-id: queue.test.${random.value}
+#  dynamic-id: queue.test.2
