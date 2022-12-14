@@ -1,7 +1,6 @@
 package com.example.sse_sample.document;
 
 import lombok.Builder;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -14,7 +13,6 @@ import java.util.Date;
 @Document(collection = "notifications")
 @Builder
 @TypeAlias("notification")
-@Setter
 public class Notification {
 
     @Id
@@ -27,13 +25,21 @@ public class Notification {
     //알림을 보낸 사용자의 아이디
     private String senderId;
 
-    private NotificationType type;
+    //알림 보낸 사용자의 이미지 url
+    private String senderImgUrl;
 
+    //알림 보낸 사용자의 profile url
+    private String senderProfileUrl;
+
+    private NotificationType type;
 
     //STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST : Strategy 식별자
     //POST_REPLY, POST_LIKE, MENTION : POST 식별자
     //FOLLOW : receiverId
     private String target;
+
+    //target으로 바로이동 할 수 있는 url
+    private String targetUrl;
 
     //NEW_POST : 신규 POST 내용
     //POST_REPLY : POST 댓글 내용
@@ -41,7 +47,7 @@ public class Notification {
     private String content;
 
     //receiver가 해당 메세지를 봤는지 여부
-    private boolean isRead;
+    private boolean read;
 
 
     /**
@@ -57,5 +63,10 @@ public class Notification {
     public enum NotificationType{
         STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST, POST_REPLY, POST_LIKE,
         MENTION, FOLLOW;
+    }
+
+    public Notification read() {
+        read = true;
+        return this;
     }
 }

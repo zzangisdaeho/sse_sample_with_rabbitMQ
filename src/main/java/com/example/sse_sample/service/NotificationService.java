@@ -88,10 +88,25 @@ public class NotificationService {
         }
     }
 
-    public List<NotificationDto> readNotifications(String userId){
-        List<Notification> recent90DaysNotifications = notificationRepository.findAllByReceiverIdAndCreatedAtAfter(userId, Date.from(ZonedDateTime.now().minusDays(90).toInstant()));
+    public List<NotificationDto> readNotifications(long userId){
+        List<Notification> recent90DaysNotifications = notificationRepository.findAllByReceiverIdAndCreatedAtAfterAndReadIsFalse(userId, Date.from(ZonedDateTime.now().minusDays(90).toInstant()));
 
         return recent90DaysNotifications.stream().map(notification -> modelMapper.map(notification, NotificationDto.class)).collect(Collectors.toList());
     }
 
+    public Notification updateNotificationReadCondition(String notificationId) {
+        Notification findNotification = notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 notification id입니다"));
+
+        notificationRepository.save(findNotification.read());
+
+        return findNotification;
+    }
+
+    public void updateAllNotificationReadCondition(String userId) {
+        notificationRepository.saveAll(
+                notificationRepository.findAllByReceiverId(userId)
+                        .stream().map(Notification::read).collect(Collectors.toList())
+        );
+    }
 }

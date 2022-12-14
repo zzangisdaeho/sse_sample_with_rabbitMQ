@@ -19,11 +19,11 @@ class NotificationRepositoryTest {
         notificationRepository.save(
                 Notification.builder()
                         .content("test")
-                        .receiverId("receiverB")
+                        .receiverId("receiverA")
                         .senderId("senderZ")
                         .type(Notification.NotificationType.STRATEGY_PURCHASE)
                         .target("strategyA")
-                        .content("I bought3!")
+                        .content("I bought!")
                         .build()
         );
     }

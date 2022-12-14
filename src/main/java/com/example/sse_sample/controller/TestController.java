@@ -8,18 +8,27 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.List;
 
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/test")
 public class TestController {
 
     private final NotificationService notificationService;
 
     private final RabbitTemplate rabbitTemplate;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "HELLO";
+    }
+
     @PostMapping("/rabbitmq")
-    public String createNotification(String id, String content){
+    public String createNotification(long id, String content){
         rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, "notification", new NotificationDto(content, id));
         return content;
     }
@@ -28,4 +37,26 @@ public class TestController {
     public void sendNotification(String id, String content){
         notificationService.send(id, content);
     }
+
+    @GetMapping(value = "/subscribe/{id}", produces = "text/event-stream")
+    public SseEmitter subscribe(@PathVariable Long id,
+                                @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+        return notificationService.subscribe(id, lastEventId);
+    }
+
+    @GetMapping
+    public List<NotificationDto> readNotifications(@RequestParam long userId){
+        return notificationService.readNotifications(userId);
+    }
+
+    @PutMapping("/{notificationId}")
+    public void updateNotificationReadCondition(@PathVariable String notificationId){
+        notificationService.updateNotificationReadCondition(notificationId);
+    }
+
+    @PutMapping
+    public void updateAllNotificationReadCondition(@RequestParam String userId){
+        notificationService.updateAllNotificationReadCondition(userId);
+    }
+
 }

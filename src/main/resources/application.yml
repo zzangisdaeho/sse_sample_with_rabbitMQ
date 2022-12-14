@@ -12,9 +12,17 @@ spring:
       password: noti
       database: notification
       auto-index-creation: true
-
 #      authentication-database: admin
 
 rabbitmq:
   dynamic-id: queue.test.${random.value}
-#  dynamic-id: queue.test.2
+
+
+playv:
+  cookie:
+    domain: dev-playv.co
+    secure: true
+
+cors:
+  allowed-origins: https://investor.dev-coinvestor.co, https://investor.dev-playv.co, https://trader-admin.dev-playv.co, https://trader-terminal.dev-playv.co, https://trader-admin-local.playv.co, https://investor-local.playv.co, https://investor-local.dev-playv.co, https://trader-admin-local.dev-playv.co
+

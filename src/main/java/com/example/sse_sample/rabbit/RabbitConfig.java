@@ -1,5 +1,6 @@
 package com.example.sse_sample.rabbit;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.FanoutExchange;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@Slf4j
 public class RabbitConfig {
 
     public static final String EXCHANGE_NAME = "exchange.test.fanout";
@@ -32,7 +34,7 @@ public class RabbitConfig {
 
     @Bean
     public Queue queue() {
-        System.out.println("dynamicQueueName = " + dynamicQueueName);
+        log.info("queue created : queueName = " + dynamicQueueName);
         return new Queue(dynamicQueueName, false, true, true);
     }
 

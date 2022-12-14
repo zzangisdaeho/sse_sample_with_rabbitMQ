@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class NotificationDto {
 
     private String content;
-    private String username;
+    private long userId;
 }
