@@ -12,7 +12,7 @@ import java.util.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/notification")
+@RequestMapping("/notifications")
 public class NotificationController {
 
 
