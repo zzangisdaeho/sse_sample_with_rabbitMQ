@@ -89,7 +89,7 @@ public class NotificationService {
     }
 
     public List<NotificationDto> readNotifications(String userId){
-        List<Notification> recent90DaysNotifications = notificationRepository.findAllByUserIdAndCreatedAtAfter(userId, Date.from(ZonedDateTime.now().minusDays(90).toInstant()));
+        List<Notification> recent90DaysNotifications = notificationRepository.findAllByReceiverIdAndCreatedAtAfter(userId, Date.from(ZonedDateTime.now().minusDays(90).toInstant()));
 
         return recent90DaysNotifications.stream().map(notification -> modelMapper.map(notification, NotificationDto.class)).collect(Collectors.toList());
     }

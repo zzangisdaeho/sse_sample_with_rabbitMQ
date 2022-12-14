@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface NotificationRepository extends MongoRepository<Notification, String> {
 
-    List<Notification> findAllByUserIdAndCreatedAtAfter(String userId, Date from);
+    List<Notification> findAllByReceiverIdAndCreatedAtAfter(String userId, Date from);
 }
