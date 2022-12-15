@@ -5,15 +5,20 @@
     <title>Notification Test Page</title>
 </head>
 <body>
-<input type="text" id="id"/>
+포트<input type="text" id="port" /><br>
+아이디<input type="text" id="id"/>
 <button type="button" onclick="login()">로그인</button>
 </body>
 </html>
 <script type="text/javaScript">
     function login() {
+        const port = document.getElementById('port').value;
         const id = document.getElementById('id').value;
 
-        const eventSource = new EventSource(`test/subscribe/` + id);
+        const destination = 'http://localhost:'+ port + '/test/subscribe/' + id
+
+        const eventSource = new EventSource(destination);
+        // const eventSource = new EventSource('http://localhost:8080/test/subscribe/' + id);
 
         eventSource.addEventListener("sse", function (event) {
             console.log(event);

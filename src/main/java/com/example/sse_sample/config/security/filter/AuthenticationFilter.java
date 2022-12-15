@@ -47,7 +47,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         if (PatternMatchUtils.simpleMatch(PATTERNS, uri)) {
             return true;
-        }else if(uri.equals("/")){
+        }
+        else if(uri.equals("/") || uri.equals("/index.html")){
             return true;
         }
 

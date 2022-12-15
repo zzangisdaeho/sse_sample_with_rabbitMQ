@@ -94,16 +94,19 @@ public class NotificationService {
         return recent90DaysNotifications.stream().map(notification -> modelMapper.map(notification, NotificationDto.class)).collect(Collectors.toList());
     }
 
-    public Notification updateNotificationReadCondition(String notificationId) {
+    public Notification updateNotificationReadCondition(Long userId, String notificationId) {
         Notification findNotification = notificationRepository.findById(notificationId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 notification id입니다"));
+
+        if (!userId.equals(findNotification.getReceiverId()))
+            throw new IllegalStateException("해당 알림의 수신자가 아닙니다.");
 
         notificationRepository.save(findNotification.read());
 
         return findNotification;
     }
 
-    public void updateAllNotificationReadCondition(String userId) {
+    public void updateAllNotificationReadCondition(Long userId) {
         notificationRepository.saveAll(
                 notificationRepository.findAllByReceiverId(userId)
                         .stream().map(Notification::read).collect(Collectors.toList())

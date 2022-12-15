@@ -1,6 +1,7 @@
 package com.example.sse_sample.document;
 
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Document(collection = "notifications")
 @Builder
 @TypeAlias("notification")
+@Getter
 public class Notification {
 
     @Id
@@ -20,10 +22,10 @@ public class Notification {
 
     //알림을 받을 사용자의 아이디
     @Indexed
-    private String receiverId;
+    private long receiverId;
 
     //알림을 보낸 사용자의 아이디
-    private String senderId;
+    private long senderId;
 
     //알림 보낸 사용자의 이미지 url
     private String senderImgUrl;

@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -34,14 +34,13 @@ public class NotificationController {
         return notificationService.readNotifications(user.getId());
     }
 
-    @PutMapping("/{notificationId}")
-    public void updateNotificationReadCondition(@PathVariable String notificationId){
-        notificationService.updateNotificationReadCondition(notificationId);
+    @PatchMapping("/{notificationId}")
+    public void updateNotificationReadCondition(@CurrentUser User user, @PathVariable String notificationId){
+        notificationService.updateNotificationReadCondition(user.getId(), notificationId);
     }
 
-    @PutMapping
-    public void updateAllNotificationReadCondition(){
-        String userId = null;
-        notificationService.updateAllNotificationReadCondition(userId);
+    @PatchMapping
+    public void updateAllNotificationReadCondition(@CurrentUser User user){
+        notificationService.updateAllNotificationReadCondition(user.getId());
     }
 }

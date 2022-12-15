@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                .requestMatchers("/test/**").permitAll()
+                .requestMatchers("/","/index.html", "/test/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(

@@ -2,7 +2,6 @@ package com.example.sse_sample.controller;
 
 import com.example.sse_sample.dto.NotificationDto;
 import com.example.sse_sample.rabbit.RabbitConfig;
-import com.example.sse_sample.repository.NotificationBufferRepository;
 import com.example.sse_sample.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,13 +48,13 @@ public class TestController {
         return notificationService.readNotifications(userId);
     }
 
-    @PutMapping("/{notificationId}")
+    @PatchMapping("/{notificationId}")
     public void updateNotificationReadCondition(@PathVariable String notificationId){
-        notificationService.updateNotificationReadCondition(notificationId);
+        notificationService.updateNotificationReadCondition(1L, notificationId);
     }
 
-    @PutMapping
-    public void updateAllNotificationReadCondition(@RequestParam String userId){
+    @PatchMapping
+    public void updateAllNotificationReadCondition(@RequestParam long userId){
         notificationService.updateAllNotificationReadCondition(userId);
     }
 
