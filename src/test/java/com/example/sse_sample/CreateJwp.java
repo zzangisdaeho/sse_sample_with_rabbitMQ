@@ -1,6 +1,7 @@
 package com.example.sse_sample;
 
 import com.example.sse_sample.config.security.auth.jwt.AccessToken;
+import com.example.sse_sample.document.Notification;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -41,6 +42,12 @@ public class CreateJwp {
     public void parsingJWT(){
         AccessToken accessToken = AccessToken.ofNullable(jwt);
         System.out.println("accessToken = " + accessToken);
+    }
+
+    @Test
+    public void wtf(){
+        String name = Notification.class.getName();
+        System.out.println("name = " + name);
     }
 
 }
