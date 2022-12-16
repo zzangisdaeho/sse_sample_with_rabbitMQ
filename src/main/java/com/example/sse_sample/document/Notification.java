@@ -1,7 +1,6 @@
 package com.example.sse_sample.document;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -15,6 +14,8 @@ import java.util.Date;
 @Builder
 @TypeAlias("notification")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Notification {
 
     @Id
@@ -64,6 +65,8 @@ public class Notification {
     }
 
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class SenderInfo{
         private Long senderId;
 
