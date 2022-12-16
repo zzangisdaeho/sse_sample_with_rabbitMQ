@@ -16,9 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class RabbitConfig {
 
-    public static final String EXCHANGE_NAME = "exchange.test.fanout";
-    private static final String QUEUE_NAME = "queue.test";
-    private static final String ROUTING_KEY = "notification.#";
+    public static final String EXCHANGE_NAME = "ns.exchange-fanout.wn.v0";
 
     @Value("${rabbitmq.dynamic-id}")
     private String dynamicQueueName;

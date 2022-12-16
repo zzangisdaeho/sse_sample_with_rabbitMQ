@@ -15,7 +15,7 @@ spring:
 #      authentication-database: admin
 
 rabbitmq:
-  dynamic-id: queue.test.${random.value}
+  dynamic-id: ns.queue.wn.v0.${random.value}
 
 
 playv:

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class RabbitConsumer {
 
     @RabbitListener(queues = "#{rabbitConfig.getDynamicQueueName()}")
-    public void receiveTest(Message message){
+    public void receiveWN(Message message){
         System.out.println("message = " + message);
         String s = new String(message.getBody());
         System.out.println("s = " + s);

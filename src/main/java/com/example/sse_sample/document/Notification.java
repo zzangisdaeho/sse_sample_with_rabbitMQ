@@ -20,18 +20,14 @@ public class Notification {
     @Id
     private String id;
 
+    private String transactionId;
+
     //알림을 받을 사용자의 아이디
     @Indexed
     private long receiverId;
 
     //알림을 보낸 사용자의 아이디
-    private long senderId;
-
-    //알림 보낸 사용자의 이미지 url
-    private String senderImgUrl;
-
-    //알림 보낸 사용자의 profile url
-    private String senderProfileUrl;
+    private SenderInfo senderInfo;
 
     private NotificationType type;
 
@@ -46,7 +42,7 @@ public class Notification {
     //NEW_POST : 신규 POST 내용
     //POST_REPLY : POST 댓글 내용
     //MENTION : 멘션된 POST의 내용
-    private String content;
+    private Object content;
 
     //receiver가 해당 메세지를 봤는지 여부
     private boolean read;
@@ -65,6 +61,15 @@ public class Notification {
     public enum NotificationType{
         STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST, POST_REPLY, POST_LIKE,
         MENTION, FOLLOW;
+    }
+
+    @Builder
+    public static class SenderInfo{
+        private Long senderId;
+
+        private String senderImgUrl;
+
+        private String senderProfileUrl;
     }
 
     public Notification read() {
