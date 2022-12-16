@@ -6,14 +6,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.json.JSONParser;
-import org.apache.tomcat.util.json.ParseException;
-import org.bson.json.JsonObject;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-
-import java.util.LinkedHashMap;
 
 @Component
 @Slf4j
@@ -33,7 +28,6 @@ public class RabbitConsumer {
         try {
             Notification notification = objectMapper.readValue(s, Notification.class);
             notificationService.send(Long.toString(notification.getReceiverId()), s);
-
         } catch (JsonProcessingException e) {
             log.error("json parsing error : ", e);
         }

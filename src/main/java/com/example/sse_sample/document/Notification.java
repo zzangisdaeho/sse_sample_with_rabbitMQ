@@ -10,12 +10,12 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 
+
 @Document(collection = "notifications")
-@Builder
 @TypeAlias("notification")
+@Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
 public class Notification {
 
     @Id
@@ -59,20 +59,20 @@ public class Notification {
     private Date createdAt = Date.from(ZonedDateTime.now().toInstant());
 
 
-    public enum NotificationType{
-        STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST, POST_REPLY, POST_LIKE,
-        MENTION, FOLLOW;
-    }
-
     @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @Getter
+    @ToString
     public static class SenderInfo{
         private Long senderId;
 
         private String senderImgUrl;
 
         private String senderProfileUrl;
+    }
+    public enum NotificationType{
+        STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST, POST_REPLY, POST_LIKE,
+        MENTION, FOLLOW;
+
     }
 
     public Notification read() {
