@@ -47,38 +47,38 @@ public class RabbitConfig {
         return BindingBuilder.bind(queue).to(exchange);
     }
 
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter(null));
-        return rabbitTemplate;
-    }
-
-    @Bean
-    public MessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper){
-        return new Jackson2JsonMessageConverter(objectMapper);
-    }
-
-    @Bean
-    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(
-            SimpleRabbitListenerContainerFactoryConfigurer configurer, ConnectionFactory connectionFactory) {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        configurer.configure(factory, connectionFactory);
-
-        factory.setAfterReceivePostProcessors(message -> {
-            String type = message.getMessageProperties().getHeaders().get("__TypeId__").toString();
-            String typeId = null;
-
-            if (type.equalsIgnoreCase("co.coinvestor.notification_dispatcher.document.Notification")) {
-                typeId = Notification.class.getName();
-            }
-
-            Optional.ofNullable(typeId).ifPresent(t -> message.getMessageProperties().setHeader("__TypeId__", t));
-
-            return message;
-        });
-
-        return factory;
-    }
+//    @Bean
+//    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+//
+//        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+//        rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter(null));
+//        return rabbitTemplate;
+//    }
+//
+//    @Bean
+//    public MessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper){
+//        return new Jackson2JsonMessageConverter(objectMapper);
+//    }
+//
+//    @Bean
+//    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(
+//            SimpleRabbitListenerContainerFactoryConfigurer configurer, ConnectionFactory connectionFactory) {
+//        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+//        configurer.configure(factory, connectionFactory);
+//
+//        factory.setAfterReceivePostProcessors(message -> {
+//            String type = message.getMessageProperties().getHeaders().get("__TypeId__").toString();
+//            String typeId = null;
+//
+//            if (type.equalsIgnoreCase("co.coinvestor.notification_dispatcher.document.Notification")) {
+//                typeId = Notification.class.getName();
+//            }
+//
+//            Optional.ofNullable(typeId).ifPresent(t -> message.getMessageProperties().setHeader("__TypeId__", t));
+//
+//            return message;
+//        });
+//
+//        return factory;
+//    }
 }

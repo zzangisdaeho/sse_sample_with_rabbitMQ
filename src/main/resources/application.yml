@@ -13,6 +13,9 @@ spring:
       database: notification
       auto-index-creation: true
 #      authentication-database: admin
+  mvc:
+    async:
+      request-timeout: -1
 
 rabbitmq:
   dynamic-id: ns.queue.wn.v0.${random.value}

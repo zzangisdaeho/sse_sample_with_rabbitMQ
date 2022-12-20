@@ -14,15 +14,16 @@ class NotificationRepositoryTest {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
     public void ttlTest(){
         notificationRepository.save(
                 Notification.builder()
                         .transactionId(UUID.randomUUID().toString())
-                        .content("test")
+                        .payload(Notification.Payload.builder()
+                                .content("test")
+                                .target("strategyA")
+                                .targetUrl("strategyA/URL")
+                                .build())
                         .receiverId(1L)
                         .senderInfo(Notification.SenderInfo.builder()
                                 .senderId(100L)
@@ -30,8 +31,7 @@ class NotificationRepositoryTest {
                                 .senderProfileUrl("senderProfileUrl")
                                 .build())
                         .type(Notification.NotificationType.STRATEGY_PURCHASE)
-                        .target("strategyA")
-                        .content("I bought!")
+                        .source(Notification.NotificationSource.INVESTOR)
                         .build()
         );
     }

@@ -20,15 +20,15 @@ public class RabbitConsumer {
     private final ObjectMapper objectMapper;
 
     @RabbitListener(queues = "#{rabbitConfig.getDynamicQueueName()}")
-    public void receiveWN(Notification message){
-        notificationService.send(Long.toString(message.getReceiverId()), message.toString());
-
-//        try {
-//            Notification notification = objectMapper.readValue(s, Notification.class);
-//            notificationService.send(Long.toString(notification.getReceiverId()), s);
-//        } catch (JsonProcessingException e) {
-//            log.error("json parsing error : ", e);
-//        }
+    public void receiveWN(Message message){
+        String s = new String(message.getBody());
+        try {
+            Notification notification = objectMapper.readValue(s, Notification.class);
+            System.out.println("notification = " + notification);
+            notificationService.send(Long.toString(notification.getReceiverId()), s);
+        } catch (JsonProcessingException e) {
+            log.error("json parsing error : ", e);
+        }
 
     }
 }

@@ -32,6 +32,8 @@ public class Notification {
 
     private NotificationType type;
 
+    private NotificationSource source;
+
     //STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST : Strategy 식별자
     //POST_REPLY, POST_LIKE, MENTION : POST 식별자
     //FOLLOW : receiverId
@@ -43,7 +45,7 @@ public class Notification {
     //NEW_POST : 신규 POST 내용
     //POST_REPLY : POST 댓글 내용
     //MENTION : 멘션된 POST의 내용
-    private Object content;
+    private Payload payload;
 
     //receiver가 해당 메세지를 봤는지 여부
     private boolean read;
@@ -73,6 +75,29 @@ public class Notification {
         STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST, POST_REPLY, POST_LIKE,
         MENTION, FOLLOW;
 
+    }
+
+    public enum NotificationSource {
+
+        INVESTOR, BABBLE, ADMIN;
+    }
+
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @ToString
+    public static class Payload{
+
+        //STRATEGY_PURCHASE, STRATEGY_LIKE, NEW_POST : Strategy 식별자
+        //POST_REPLY, POST_LIKE, MENTION : POST 식별자
+        //FOLLOW : receiverId
+        private String target;
+
+        //target으로 바로이동 할 수 있는 url
+        private String targetUrl;
+
+        private Object content;
     }
 
     public Notification read() {
